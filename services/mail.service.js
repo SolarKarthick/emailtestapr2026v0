@@ -1,15 +1,23 @@
-const mailer = require('../utils/mailer');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.sendWelcomeMail = async (email) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: 'Welcome 🎉',
-    html: `
-      <h2>Welcome!</h2>
-      <p>Thanks for registering with us.</p>
-    `
-  };
+  try {
+    const response = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: email,
+      subject: 'Welcome 🎉',
+      html: `
+        <h2>Welcome!</h2>
+        <p>Thanks for registering with us.</p>
+      `
+    });
 
-  await mailer.sendMail(mailOptions);
+    console.log('Email sent:', response);
+
+  } catch (error) {
+    console.error('Email error:', error);
+    throw error;
+  }
 };
