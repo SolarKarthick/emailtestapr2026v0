@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 exports.sendWelcomeMail = async (email) => {
   try {
     const response = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'karthicksolaroffical@gmail.com',
       to: email,
       subject: 'Welcome 🎉',
       html: `
